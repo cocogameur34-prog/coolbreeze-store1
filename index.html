@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -263,65 +264,63 @@
     .gallery-thumb img{width:80px; height:64px;}
   }
 
-  /* ---------- mode édition ---------- */
-  .edit-fab{
-    position:fixed; bottom:26px; right:26px; z-index:200;
-    background:var(--ink); color:var(--lime);
-    font-family:var(--font-body); font-weight:800; font-size:14px;
-    padding:14px 20px; border-radius:100px; border:none; cursor:pointer;
-    box-shadow:0 12px 28px rgba(14,26,30,0.35);
-    display:flex; align-items:center; gap:8px;
+  /* ---------- checkout modal ---------- */
+  .checkout-overlay{
+    display:none; position:fixed; inset:0; z-index:300;
+    background:rgba(14,26,30,0.7); backdrop-filter:blur(3px);
+    align-items:flex-start; justify-content:center;
+    padding:40px 20px; overflow-y:auto;
   }
-  .edit-toolbar{
-    position:fixed; top:0; left:0; right:0; z-index:199;
-    background:var(--ink); color:var(--ice);
-    display:none;
-    align-items:center; justify-content:center; gap:14px;
-    padding:12px 20px; font-family:var(--font-mono); font-size:13px;
+  .checkout-overlay.open{display:flex;}
+  .checkout-box{
+    background:var(--paper); border-radius:24px;
+    max-width:600px; width:100%; padding:40px;
+    position:relative;
   }
-  body.editing .edit-toolbar{display:flex;}
-  body.editing{ padding-top:48px; }
-  .edit-toolbar button{
-    font-family:var(--font-body); font-weight:700; font-size:13px;
-    padding:9px 16px; border-radius:100px; border:none; cursor:pointer;
+  .checkout-close{
+    position:absolute; top:20px; right:20px;
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid var(--line); background:var(--ice);
+    cursor:pointer; font-size:16px; color:var(--ink);
   }
-  .edit-toolbar .save-btn{background:var(--lime); color:var(--ink);}
-  .edit-toolbar .export-btn{background:var(--cyan); color:var(--ink);}
-  .edit-toolbar .quit-btn{background:transparent; color:var(--ice); border:1px solid rgba(255,255,255,0.3) !important;}
-  body.editing [contenteditable="true"]{
-    outline:2px dashed rgba(15,184,196,0.6);
-    outline-offset:3px; border-radius:4px;
-    cursor:text;
+  .checkout-box h3{
+    font-family:var(--font-display); font-size:26px; letter-spacing:-0.3px; margin-bottom:6px;
   }
-  body.editing [contenteditable="true"]:hover{ outline-color:var(--cyan-deep); }
-  body.editing [contenteditable="true"]:focus{ outline:2px solid var(--cyan-deep); background:rgba(15,184,196,0.06); }
-  .gallery-add{
-    display:none;
-    align-items:center; justify-content:center;
-    border-radius:14px; height:80px;
-    background:rgba(15,184,196,0.1); border:2px dashed var(--cyan-deep);
-    color:var(--cyan-deep); font-size:22px; cursor:pointer; font-weight:800;
+  .checkout-box .checkout-sub{color:#4C5B5F; font-size:14px; margin-bottom:24px;}
+  .checkout-summary{
+    background:var(--ice); border-radius:16px; padding:18px 20px; margin-bottom:26px;
   }
-  body.editing .gallery-add{ display:flex; }
-  .gallery-thumb-wrap{ position:relative; }
-  .gallery-del{
-    display:none;
-    position:absolute; top:4px; right:4px;
-    width:20px; height:20px; border-radius:50%;
-    background:var(--ink); color:#fff; font-size:12px; line-height:20px; text-align:center;
-    cursor:pointer; z-index:2;
+  .checkout-summary .row{display:flex; justify-content:space-between; font-size:14px; padding:6px 0;}
+  .checkout-summary .row.total{font-weight:800; font-size:16px; border-top:1px solid var(--line); margin-top:6px; padding-top:12px;}
+  .checkout-form label{
+    display:block; font-size:12px; font-weight:700; color:#4C5B5F;
+    margin-bottom:6px; margin-top:16px; text-transform:uppercase; letter-spacing:0.03em;
   }
-  body.editing .gallery-del{ display:block; }
-  .rate-row{
-    display:grid; grid-template-columns:1.4fr 0.8fr 1fr; gap:10px; align-items:center;
-    padding:8px 0; border-bottom:1px solid rgba(14,26,30,0.08); font-size:13px;
+  .checkout-form input, .checkout-form select{
+    width:100%; padding:13px 14px; border-radius:12px; border:1.5px solid var(--line);
+    font-family:var(--font-body); font-size:15px; background:#fff;
   }
-  .rate-row input{
-    width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line);
-    font-family:var(--font-body); font-size:13px;
+  .checkout-form input:focus, .checkout-form select:focus{ outline:2px solid var(--cyan-deep); border-color:var(--cyan-deep); }
+  .checkout-grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .checkout-submit{
+    width:100%; margin-top:26px; padding:17px; border-radius:100px; border:none;
+    background:var(--ink); color:var(--lime); font-weight:800; font-size:16px; cursor:pointer;
   }
-  .rate-editor{ display:none; max-width:1180px; margin:24px auto 0; background:var(--ice); border-radius:16px; padding:22px; }
-  body.editing .rate-editor{ display:block; }
+  .checkout-note{font-size:12px; color:#7A8B8E; margin-top:14px; line-height:1.5;}
+
+  .payment-box{ display:none; }
+  .payment-box.open{ display:block; }
+  .payment-ref{
+    font-family:var(--font-mono); background:var(--ink); color:var(--lime);
+    padding:14px 16px; border-radius:12px; font-size:14px; margin:16px 0; text-align:center; font-weight:700;
+  }
+  .rib-card{
+    background:var(--ice); border-radius:16px; padding:20px; margin-top:14px;
+  }
+  .rib-row{display:flex; justify-content:space-between; font-size:14px; padding:7px 0; border-bottom:1px solid var(--line);}
+  .rib-row:last-child{border-bottom:none;}
+  .rib-row span:first-child{color:#4C5B5F;}
+  .rib-row span:last-child{font-family:var(--font-mono); font-weight:700;}
 
   /* ---------- features ---------- */
   .features{
@@ -358,14 +357,6 @@
 </head>
 <body>
 
-  <div class="edit-toolbar">
-    <span>✏️ MODE ÉDITION — cliquez un texte pour le modifier</span>
-    <button class="save-btn" onclick="saveSite()">Enregistrer</button>
-    <button class="export-btn" onclick="exportSite()">Télécharger le site</button>
-    <button class="quit-btn" onclick="toggleEdit(false)">Quitter</button>
-  </div>
-  <button class="edit-fab" onclick="toggleEdit(true)" id="editFab">✏️ Modifier le site</button>
-
   <div class="topbar">
     <div class="brand"><span class="dot"></span>CoolBreeze</div>
     <nav>
@@ -379,9 +370,9 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <div class="eyebrow" data-key="hero-eyebrow">VENTILATEUR DE POCHE · USB-C</div>
-      <h1 data-key="hero-title">Une brise glacée<br>dans <span>chaque poche.</span></h1>
-      <p data-key="hero-p">Ventilateur portatif à main, rafale haute vitesse, autonomie 12h, recharge USB rapide. Choisissez votre couleur pour chacun des deux exemplaires du lot.</p>
+      <div class="eyebrow">VENTILATEUR DE POCHE · USB-C</div>
+      <h1>Une brise glacée<br>dans <span>chaque poche.</span></h1>
+      <p>Ventilateur portatif à main, rafale haute vitesse, autonomie 12h, recharge USB rapide. Choisissez votre couleur pour chacun des deux exemplaires du lot.</p>
       <div class="hero-stats">
         <div><b>4.9★</b><span>NOTE CLIENTS</span></div>
         <div><b>12H</b><span>AUTONOMIE</span></div>
@@ -434,20 +425,20 @@
   <section id="offre">
     <div class="section-head">
       <div class="eyebrow">OFFRE DUO</div>
-      <h2 data-key="offre-h2">2 ventilateurs, 1 seul prix : 19,99 €</h2>
-      <p data-key="offre-p">Composez votre lot — chaque exemplaire se choisit dans sa propre couleur.</p>
+      <h2>2 ventilateurs, 1 seul prix : 19,99 €</h2>
+      <p>Composez votre lot — chaque exemplaire se choisit dans sa propre couleur.</p>
     </div>
 
     <div class="bundle">
       <div>
-        <div class="bundle-badge" data-key="bundle-badge">⚡ OFFRE LIMITÉE</div>
-        <h3 data-key="bundle-h3">Le lot Cool&nbsp;Duo</h3>
-        <p class="sub" data-key="bundle-sub">Un pour vous, un pour la maison — ou pour offrir. Ventilateur haute vitesse, écran LED, batterie 12h, recharge USB-C.</p>
+        <div class="bundle-badge">⚡ OFFRE LIMITÉE</div>
+        <h3>Le lot Cool&nbsp;Duo</h3>
+        <p class="sub">Un pour vous, un pour la maison — ou pour offrir. Ventilateur haute vitesse, écran LED, batterie 12h, recharge USB-C.</p>
         <div class="bundle-price">
-          <span class="now" data-key="bundle-now">19,99 €</span>
-          <span class="old" data-key="bundle-old">31,24 €</span>
+          <span class="now">19,99 €</span>
+          <span class="old">31,24 €</span>
         </div>
-        <div class="bundle-note" data-key="bundle-note">Soit <strong>9,99 € l'unité</strong> · livraison calculée selon votre pays ci-dessous</div>
+        <div class="bundle-note">Soit <strong>9,99 € l'unité</strong> · livraison calculée selon votre pays ci-dessous</div>
       </div>
 
       <div class="unit-picker">
@@ -475,7 +466,7 @@
             <div class="swatch sw-white" data-name="Blanc" onclick="pick(2,this)"></div>
           </div>
         </div>
-        <button class="bundle-cta">Ajouter le lot au panier — 19,99 €</button>
+        <button class="bundle-cta" onclick="openCheckout()">Commander — 19,99 €</button>
       </div>
     </div>
   </section>
@@ -483,8 +474,8 @@
   <section id="livraison">
     <div class="ship">
       <div>
-        <h3 data-key="ship-h3">Frais de livraison par pays</h3>
-        <p data-key="ship-p">Sélectionnez votre pays de livraison pour voir le délai et les frais de port appliqués au lot de 2 ventilateurs.</p>
+        <h3>Frais de livraison par pays</h3>
+        <p>Sélectionnez votre pays de livraison pour voir le délai et les frais de port appliqués au lot de 2 ventilateurs.</p>
         <select id="country" onchange="updateShipping()">
           <option value="FR" data-fee="0" data-eta="4-7 jours">France — livraison gratuite</option>
           <option value="BE" data-fee="2.90" data-eta="5-8 jours">Belgique — 2,90 €</option>
@@ -505,29 +496,19 @@
         <div class="ship-eta" id="etaDisplay">Livraison estimée : 4-7 jours</div>
       </div>
     </div>
-    <div class="rate-editor">
-      <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; color:var(--cyan-deep); margin-bottom:10px;">GÉRER LES TARIFS (visible en mode édition uniquement)</div>
-      <div class="rate-row" style="font-weight:700; color:#4C5B5F;"><span>Pays</span><span>Frais (€)</span><span>Délai</span></div>
-      <div id="rateRows"></div>
-    </div>
   </section>
 
   <section id="galerie">
     <div class="section-head">
       <div class="eyebrow">GALERIE</div>
-      <h2 data-key="galerie-h2">Photos du produit</h2>
-      <p data-key="galerie-p">Les visuels que vous envoyez apparaissent ici — cliquez une vignette pour l'afficher en grand.</p>
+      <h2>Photos du produit</h2>
+      <p>Les visuels que vous envoyez apparaissent ici — cliquez une vignette pour l'afficher en grand.</p>
     </div>
     <div class="gallery">
       <div class="gallery-thumbs" id="galleryThumbs">
-        <div class="gallery-thumb-wrap">
-          <div class="gallery-del" onclick="deleteGalleryImage(this)">✕</div>
-          <div class="gallery-thumb active" onclick="showGalleryImage('images/gallery-1.png', this)">
-            <img src="images/gallery-1.png" alt="Photo produit 1">
-          </div>
+        <div class="gallery-thumb active" onclick="showGalleryImage('images/gallery-1.png', this)">
+          <img src="images/gallery-1.png" alt="Photo produit 1">
         </div>
-        <div class="gallery-add" onclick="document.getElementById('photoInput').click()">+</div>
-        <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="addGalleryImages(this.files)">
       </div>
       <div class="gallery-main">
         <img id="galleryMain" src="images/gallery-1.png" alt="Photo produit en grand">
@@ -538,39 +519,103 @@
   <section id="avis">
     <div class="section-head">
       <div class="eyebrow">POURQUOI COOLBREEZE</div>
-      <h2 data-key="avis-h2">Pensé pour tenir dans une poche, une pluie glacée</h2>
+      <h2>Pensé pour tenir dans une poche, une pluie glacée</h2>
     </div>
     <div class="features">
       <div class="feature">
         <div class="icon">❄</div>
-        <h4 data-key="feat1-h4">Rafale haute vitesse</h4>
-        <p data-key="feat1-p">Trois niveaux de ventilation, du souffle léger à la rafale glacée.</p>
+        <h4>Rafale haute vitesse</h4>
+        <p>Trois niveaux de ventilation, du souffle léger à la rafale glacée.</p>
       </div>
       <div class="feature">
         <div class="icon">🔋</div>
-        <h4 data-key="feat2-h4">12h d'autonomie</h4>
-        <p data-key="feat2-p">Batterie longue durée, recharge complète en moins de 2h par USB-C.</p>
+        <h4>12h d'autonomie</h4>
+        <p>Batterie longue durée, recharge complète en moins de 2h par USB-C.</p>
       </div>
       <div class="feature">
         <div class="icon">🤫</div>
-        <h4 data-key="feat3-h4">Mode silencieux</h4>
-        <p data-key="feat3-p">Moins de 30dB en vitesse standard, discret en toute situation.</p>
+        <h4>Mode silencieux</h4>
+        <p>Moins de 30dB en vitesse standard, discret en toute situation.</p>
       </div>
       <div class="feature">
         <div class="icon">📟</div>
-        <h4 data-key="feat4-h4">Écran LED</h4>
-        <p data-key="feat4-p">Niveau de batterie et vitesse affichés en temps réel.</p>
+        <h4>Écran LED</h4>
+        <p>Niveau de batterie et vitesse affichés en temps réel.</p>
       </div>
     </div>
   </section>
 
-  <footer data-key="footer-text">
+  <footer>
     CoolBreeze — Offre lot de 2 à 19,99 € · Frais de livraison variables selon le pays de destination · Retour gratuit sous 15 jours
   </footer>
 
-<script>
-  const STORAGE_KEY = 'coolbreeze_site_data_v1';
+  <div class="checkout-overlay" id="checkoutOverlay">
+    <div class="checkout-box">
+      <button class="checkout-close" onclick="closeCheckout()">✕</button>
 
+      <div id="checkoutFormView">
+        <h3>Finaliser la commande</h3>
+        <p class="checkout-sub">Lot de 2 ventilateurs CoolBreeze</p>
+
+        <div class="checkout-summary">
+          <div class="row"><span>Ventilateur n°1</span><span id="sumColor1">Silvery</span></div>
+          <div class="row"><span>Ventilateur n°2</span><span id="sumColor2">Menthe</span></div>
+          <div class="row"><span>Livraison (<span id="sumCountryName">France</span>)</span><span id="sumShip">Gratuite</span></div>
+          <div class="row total"><span>Total à payer</span><span id="sumTotal">19,99 €</span></div>
+        </div>
+
+        <form class="checkout-form" id="orderForm" onsubmit="submitOrder(event)">
+          <label for="ckName">Nom complet</label>
+          <input type="text" id="ckName" required>
+
+          <label for="ckEmail">E-mail</label>
+          <input type="email" id="ckEmail" required>
+
+          <label for="ckPhone">Téléphone</label>
+          <input type="tel" id="ckPhone" required>
+
+          <label for="ckAddress">Adresse</label>
+          <input type="text" id="ckAddress" required>
+
+          <div class="checkout-grid2">
+            <div>
+              <label for="ckZip">Code postal</label>
+              <input type="text" id="ckZip" required>
+            </div>
+            <div>
+              <label for="ckCity">Ville</label>
+              <input type="text" id="ckCity" required>
+            </div>
+          </div>
+
+          <label for="ckCountry">Pays de livraison</label>
+          <select id="ckCountry" onchange="syncCheckoutCountry()"></select>
+
+          <button type="submit" class="checkout-submit">Valider la commande</button>
+          <p class="checkout-note">En validant, vous recevrez les coordonnées bancaires pour effectuer le virement. La commande sera expédiée dès réception du paiement.</p>
+        </form>
+      </div>
+
+      <div class="payment-box" id="paymentView">
+        <h3>Commande enregistrée ✅</h3>
+        <p class="checkout-sub">Merci ! Il ne reste qu'à effectuer le virement pour valider l'envoi.</p>
+
+        <div class="payment-ref">RÉFÉRENCE À INDIQUER : <span id="orderRef"></span></div>
+
+        <div class="rib-card">
+          <div class="rib-row"><span>Titulaire du compte</span><span>MARINO COSIMO</span></div>
+          <div class="rib-row"><span>IBAN</span><span>FR76 2823 3000 0140 9787 4677 642</span></div>
+          <div class="rib-row"><span>BIC</span><span>REVOFRP2</span></div>
+          <div class="rib-row"><span>Montant à virer</span><span id="paidTotal">19,99 €</span></div>
+        </div>
+
+        <p class="checkout-note">Un e-mail de confirmation avec ces informations va s'ouvrir dans votre messagerie — merci de l'envoyer pour que la commande nous parvienne. Indiquez bien la référence ci-dessus dans le motif du virement.</p>
+        <button class="checkout-submit" onclick="closeCheckout()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+<script>
   function pick(unit, el){
     document.querySelectorAll('.swatches[data-unit="'+unit+'"] .swatch').forEach(s=>s.classList.remove('selected'));
     el.classList.add('selected');
@@ -585,160 +630,81 @@
     document.getElementById('totalDisplay').textContent = (19.99 + fee).toFixed(2).replace('.',',') + ' €';
     document.getElementById('etaDisplay').textContent = 'Livraison estimée : ' + eta;
   }
-
   function showGalleryImage(src, el){
     document.getElementById('galleryMain').src = src;
     document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
   }
-
-  /* ---------- mode édition ---------- */
-  function toggleEdit(on){
-    document.body.classList.toggle('editing', on);
-    document.getElementById('editFab').style.display = on ? 'none' : 'flex';
-    document.querySelectorAll('[data-key]').forEach(el => el.setAttribute('contenteditable', on ? 'true' : 'false'));
-    if(on) buildRateEditor();
-  }
-
-  function collectSiteData(){
-    const data = { texts:{}, gallery:[], rates:[] };
-    document.querySelectorAll('[data-key]').forEach(el => {
-      data.texts[el.dataset.key] = el.innerHTML;
-    });
-    document.querySelectorAll('#galleryThumbs .gallery-thumb').forEach(t => {
-      const img = t.querySelector('img');
-      data.gallery.push({ src: img.src, alt: img.alt });
-    });
-    document.querySelectorAll('#country option').forEach(o => {
-      data.rates.push({ value:o.value, label:o.textContent, fee:o.dataset.fee, eta:o.dataset.eta });
-    });
-    return data;
-  }
-
-  function saveSite(){
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectSiteData()));
-      alert('Site enregistré dans ce navigateur. Rouvrez la page ici pour retrouver vos changements.');
-    }catch(e){
-      alert('Impossible d\'enregistrer (stockage local plein ou indisponible).');
-    }
-  }
-
-  function loadSite(){
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return;
-    let data;
-    try{ data = JSON.parse(raw); }catch(e){ return; }
-
-    if(data.texts){
-      Object.keys(data.texts).forEach(key => {
-        const el = document.querySelector('[data-key="'+key+'"]');
-        if(el) el.innerHTML = data.texts[key];
-      });
-    }
-    if(data.gallery && data.gallery.length){
-      const wrap = document.getElementById('galleryThumbs');
-      wrap.querySelectorAll('.gallery-thumb-wrap').forEach(n => n.remove());
-      const addTile = wrap.querySelector('.gallery-add');
-      data.gallery.forEach((g,i) => {
-        const node = buildThumb(g.src, g.alt);
-        wrap.insertBefore(node, addTile);
-      });
-      const firstImg = wrap.querySelector('.gallery-thumb img');
-      if(firstImg){
-        document.getElementById('galleryMain').src = firstImg.src;
-        wrap.querySelector('.gallery-thumb').classList.add('active');
-      }
-    }
-    if(data.rates && data.rates.length){
-      const sel = document.getElementById('country');
-      sel.innerHTML = '';
-      data.rates.forEach(r => {
-        const o = document.createElement('option');
-        o.value = r.value; o.textContent = r.label;
-        o.dataset.fee = r.fee; o.dataset.eta = r.eta;
-        sel.appendChild(o);
-      });
-    }
-    updateShipping();
-  }
-
-  /* ---------- galerie dynamique ---------- */
-  function buildThumb(src, alt){
-    const wrap = document.createElement('div');
-    wrap.className = 'gallery-thumb-wrap';
-    wrap.innerHTML =
-      '<div class="gallery-del" onclick="deleteGalleryImage(this)">✕</div>' +
-      '<div class="gallery-thumb" onclick="showGalleryImage(this.querySelector(\'img\').src, this)">' +
-      '<img src="'+src+'" alt="'+(alt||'Photo produit')+'"></div>';
-    return wrap;
-  }
-
-  function addGalleryImages(files){
-    const wrap = document.getElementById('galleryThumbs');
-    const addTile = wrap.querySelector('.gallery-add');
-    Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const node = buildThumb(e.target.result, file.name);
-        wrap.insertBefore(node, addTile);
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function deleteGalleryImage(btn){
-    const wrap = btn.closest('.gallery-thumb-wrap');
-    wrap.remove();
-  }
-
-  /* ---------- éditeur de tarifs ---------- */
-  function buildRateEditor(){
-    const rows = document.getElementById('rateRows');
-    rows.innerHTML = '';
-    document.querySelectorAll('#country option').forEach(opt => {
-      const row = document.createElement('div');
-      row.className = 'rate-row';
-      row.innerHTML =
-        '<span>'+opt.textContent.split(' — ')[0]+'</span>' +
-        '<input type="number" step="0.10" value="'+opt.dataset.fee+'" onchange="updateRate(this,\'fee\',\''+opt.value+'\')">' +
-        '<input type="text" value="'+opt.dataset.eta+'" onchange="updateRate(this,\'eta\',\''+opt.value+'\')">';
-      rows.appendChild(row);
-    });
-  }
-  function updateRate(input, field, value){
-    const opt = document.querySelector('#country option[value="'+value+'"]');
-    if(!opt) return;
-    if(field === 'fee'){
-      opt.dataset.fee = input.value;
-      const feeNum = parseFloat(input.value);
-      const country = opt.textContent.split(' — ')[0];
-      opt.textContent = country + ' — ' + (feeNum === 0 ? 'livraison gratuite' : feeNum.toFixed(2).replace('.',',') + ' €');
-    } else {
-      opt.dataset.eta = input.value;
-    }
-    updateShipping();
-  }
-
-  /* ---------- export du site ---------- */
-  function exportSite(){
-    saveSite();
-    const wasEditing = document.body.classList.contains('editing');
-    toggleEdit(false);
-    const clone = document.documentElement.cloneNode(true);
-    clone.querySelector('body').classList.remove('editing');
-    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-    const blob = new Blob([html], {type:'text/html'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'mon-site-coolbreeze.html';
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
-    if(wasEditing) toggleEdit(true);
-  }
-
-  loadSite();
   updateShipping();
+
+  /* ---------- tunnel de commande ---------- */
+  const SHOP_EMAIL = 'cosimomarino595@icloud.com';
+
+  function buildCheckoutCountrySelect(){
+    const src = document.getElementById('country');
+    const dst = document.getElementById('ckCountry');
+    dst.innerHTML = src.innerHTML;
+    dst.selectedIndex = src.selectedIndex;
+  }
+
+  function openCheckout(){
+    buildCheckoutCountrySelect();
+    syncCheckoutCountry();
+    document.getElementById('sumColor1').textContent = document.getElementById('name1').textContent;
+    document.getElementById('sumColor2').textContent = document.getElementById('name2').textContent;
+    document.getElementById('checkoutFormView').style.display = 'block';
+    document.getElementById('paymentView').classList.remove('open');
+    document.getElementById('checkoutOverlay').classList.add('open');
+  }
+  function closeCheckout(){
+    document.getElementById('checkoutOverlay').classList.remove('open');
+  }
+  function syncCheckoutCountry(){
+    const sel = document.getElementById('ckCountry');
+    const opt = sel.options[sel.selectedIndex];
+    const fee = parseFloat(opt.dataset.fee);
+    document.getElementById('sumCountryName').textContent = opt.textContent.split(' — ')[0];
+    document.getElementById('sumShip').textContent = fee === 0 ? 'Gratuite' : fee.toFixed(2).replace('.',',') + ' €';
+    document.getElementById('sumTotal').textContent = (19.99 + fee).toFixed(2).replace('.',',') + ' €';
+  }
+
+  function submitOrder(e){
+    e.preventDefault();
+    const name = document.getElementById('ckName').value;
+    const email = document.getElementById('ckEmail').value;
+    const phone = document.getElementById('ckPhone').value;
+    const address = document.getElementById('ckAddress').value;
+    const zip = document.getElementById('ckZip').value;
+    const city = document.getElementById('ckCity').value;
+    const sel = document.getElementById('ckCountry');
+    const country = sel.options[sel.selectedIndex].textContent.split(' — ')[0];
+    const color1 = document.getElementById('sumColor1').textContent;
+    const color2 = document.getElementById('sumColor2').textContent;
+    const total = document.getElementById('sumTotal').textContent;
+
+    const ref = 'CB-' + Date.now().toString().slice(-8);
+    document.getElementById('orderRef').textContent = ref;
+    document.getElementById('paidTotal').textContent = total;
+
+    const body =
+      'Nouvelle commande CoolBreeze\n\n' +
+      'Référence : ' + ref + '\n' +
+      'Total : ' + total + '\n\n' +
+      'Client : ' + name + '\n' +
+      'Email : ' + email + '\n' +
+      'Téléphone : ' + phone + '\n' +
+      'Adresse : ' + address + ', ' + zip + ' ' + city + ', ' + country + '\n\n' +
+      'Ventilateur 1 : ' + color1 + '\n' +
+      'Ventilateur 2 : ' + color2;
+
+    const mailto = 'mailto:' + SHOP_EMAIL +
+      '?subject=' + encodeURIComponent('Commande CoolBreeze — ' + ref) +
+      '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+
+    document.getElementById('checkoutFormView').style.display = 'none';
+    document.getElementById('paymentView').classList.add('open');
+  }
 </script>
 
 </body>
