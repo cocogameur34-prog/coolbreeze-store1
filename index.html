@@ -257,7 +257,14 @@
   .gallery-main img{width:100%; height:auto; display:block;}
   .gallery-empty{
     padding:40px; text-align:center; color:#5C6D71; font-size:14px; line-height:1.6;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
   }
+  .gallery-placeholder{width:100%; height:80px; border-radius:12px;}
+  .gallery-placeholder-lg{width:160px; height:160px; border-radius:50%; box-shadow:0 10px 30px rgba(14,26,30,0.15);}
+  .ph-silvery{background:linear-gradient(135deg,#DADFE1,#8B9498);}
+  .ph-graphite{background:linear-gradient(135deg,#4B4F52,#1B1F24);}
+  .ph-mint{background:linear-gradient(135deg,#8FE3D4,#3FAF9C);}
+  .ph-white{background:linear-gradient(135deg,#FFFFFF,#D9DEDF); border:1px solid var(--line);}
   @media (max-width:880px){
     .gallery{grid-template-columns:1fr;}
     .gallery-thumbs{flex-direction:row; max-height:none; overflow-x:auto;}
@@ -307,6 +314,12 @@
     background:var(--ink); color:var(--lime); font-weight:800; font-size:16px; cursor:pointer;
   }
   .checkout-note{font-size:12px; color:#7A8B8E; margin-top:14px; line-height:1.5;}
+  .checkout-consent{
+    display:flex; align-items:flex-start; gap:8px; margin-top:18px;
+    font-size:12.5px; font-weight:500; color:#4C5B5F; text-transform:none;
+  }
+  .checkout-consent input{width:auto; margin-top:2px;}
+  .checkout-consent a{color:var(--cyan-deep); font-weight:700;}
 
   .payment-box{ display:none; }
   .payment-box.open{ display:block; }
@@ -374,6 +387,7 @@
       <h1>Une brise glacée<br>dans <span>chaque poche.</span></h1>
       <p>Ventilateur portatif à main, rafale haute vitesse, autonomie 12h, recharge USB rapide. Choisissez votre couleur pour chacun des deux exemplaires du lot.</p>
       <div class="hero-stats">
+        <!-- ⚠️ Remplacez cette note par vos vrais avis clients une fois que vous en aurez -->
         <div><b>4.9★</b><span>NOTE CLIENTS</span></div>
         <div><b>12H</b><span>AUTONOMIE</span></div>
         <div><b>&lt;30dB</b><span>MODE SILENCE</span></div>
@@ -502,16 +516,28 @@
     <div class="section-head">
       <div class="eyebrow">GALERIE</div>
       <h2>Photos du produit</h2>
-      <p>Les visuels que vous envoyez apparaissent ici — cliquez une vignette pour l'afficher en grand.</p>
+      <p>Aperçu par coloris — remplacez ces vignettes par vos propres photos produit (dossier <code>/images/</code>) dès qu'elles sont prêtes.</p>
     </div>
     <div class="gallery">
       <div class="gallery-thumbs" id="galleryThumbs">
-        <div class="gallery-thumb active" onclick="showGalleryImage('images/gallery-1.png', this)">
-          <img src="images/gallery-1.png" alt="Photo produit 1">
+        <div class="gallery-thumb active" data-color="silvery" onclick="showGalleryColor('silvery', this)">
+          <div class="gallery-placeholder ph-silvery"></div>
+        </div>
+        <div class="gallery-thumb" data-color="graphite" onclick="showGalleryColor('graphite', this)">
+          <div class="gallery-placeholder ph-graphite"></div>
+        </div>
+        <div class="gallery-thumb" data-color="mint" onclick="showGalleryColor('mint', this)">
+          <div class="gallery-placeholder ph-mint"></div>
+        </div>
+        <div class="gallery-thumb" data-color="white" onclick="showGalleryColor('white', this)">
+          <div class="gallery-placeholder ph-white"></div>
         </div>
       </div>
       <div class="gallery-main">
-        <img id="galleryMain" src="images/gallery-1.png" alt="Photo produit en grand">
+        <div class="gallery-empty" id="galleryMain">
+          <div class="gallery-placeholder-lg ph-silvery"></div>
+          <p style="margin-top:16px;">Coloris <strong id="galleryColorName">Silvery</strong><br>Photo produit à ajouter ici.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -545,8 +571,26 @@
     </div>
   </section>
 
+  <section id="mentions-legales" style="padding-top:20px;">
+    <div class="section-head">
+      <div class="eyebrow">INFOS LÉGALES</div>
+      <h2>Mentions légales &amp; CGV</h2>
+    </div>
+    <div style="max-width:760px; margin:0 auto; font-size:14px; line-height:1.7; color:#3B4A4E;">
+      <p><strong>⚠️ À compléter avant mise en ligne publique :</strong> ce site n'est pas conforme tant que les champs ci-dessous ne sont pas remplis. En France, un site marchand doit obligatoirement afficher l'identité du vendeur.</p>
+      <p style="margin-top:14px;"><strong>Éditeur du site :</strong> [Votre nom / raison sociale] — [Statut : auto-entrepreneur en cours d'immatriculation]<br>
+      <strong>SIRET :</strong> [à renseigner dès réception, obligatoire pour vendre légalement]<br>
+      <strong>Adresse :</strong> [adresse professionnelle]<br>
+      <strong>Contact :</strong> [email professionnel / téléphone]</p>
+      <p style="margin-top:14px;"><strong>Paiement :</strong> les paiements sont traités par Stripe. CoolBreeze ne stocke aucune donnée bancaire.<br>
+      <strong>Droit de rétractation :</strong> conformément au Code de la consommation, vous disposez de 14 jours pour retourner un produit non utilisé.<br>
+      <strong>Livraison :</strong> délais indicatifs affichés dans la section Livraison, susceptibles de varier selon le transporteur.</p>
+    </div>
+  </section>
+
   <footer>
-    CoolBreeze — Offre lot de 2 à 19,99 € · Frais de livraison variables selon le pays de destination · Retour gratuit sous 15 jours
+    CoolBreeze — Offre lot de 2 à 19,99 € · Frais de livraison variables selon le pays de destination · Retour gratuit sous 15 jours<br>
+    <span style="opacity:0.7;">[Raison sociale à compléter] — [SIRET à compléter]</span>
   </footer>
 
   <div class="checkout-overlay" id="checkoutOverlay">
@@ -591,26 +635,22 @@
           <label for="ckCountry">Pays de livraison</label>
           <select id="ckCountry" onchange="syncCheckoutCountry()"></select>
 
-          <button type="submit" class="checkout-submit">Valider la commande</button>
-          <p class="checkout-note">En validant, vous recevrez les coordonnées bancaires pour effectuer le virement. La commande sera expédiée dès réception du paiement.</p>
+          <label class="checkout-consent">
+            <input type="checkbox" id="ckConsent" required>
+            J'accepte les <a href="#mentions-legales" onclick="closeCheckout()">mentions légales</a> et les conditions générales de vente.
+          </label>
+
+          <button type="submit" class="checkout-submit">Continuer vers le paiement sécurisé (Stripe)</button>
+          <p class="checkout-note">Le paiement est traité par Stripe. Vos coordonnées bancaires ne transitent jamais par ce site.</p>
         </form>
       </div>
 
       <div class="payment-box" id="paymentView">
-        <h3>Commande enregistrée ✅</h3>
-        <p class="checkout-sub">Merci ! Il ne reste qu'à effectuer le virement pour valider l'envoi.</p>
-
-        <div class="payment-ref">RÉFÉRENCE À INDIQUER : <span id="orderRef"></span></div>
-
-        <div class="rib-card">
-          <div class="rib-row"><span>Titulaire du compte</span><span>MARINO COSIMO</span></div>
-          <div class="rib-row"><span>IBAN</span><span>FR76 2823 3000 0140 9787 4677 642</span></div>
-          <div class="rib-row"><span>BIC</span><span>REVOFRP2</span></div>
-          <div class="rib-row"><span>Montant à virer</span><span id="paidTotal">19,99 €</span></div>
-        </div>
-
-        <p class="checkout-note">Un e-mail de confirmation avec ces informations va s'ouvrir dans votre messagerie — merci de l'envoyer pour que la commande nous parvienne. Indiquez bien la référence ci-dessus dans le motif du virement.</p>
-        <button class="checkout-submit" onclick="closeCheckout()">Fermer</button>
+        <h3>Redirection en cours…</h3>
+        <p class="checkout-sub">Nous vous envoyons vers la page de paiement sécurisée Stripe.</p>
+        <div class="payment-ref">RÉFÉRENCE COMMANDE : <span id="orderRef"></span></div>
+        <p class="checkout-note">Si la redirection ne se lance pas automatiquement, <a id="stripeManualLink" href="#" target="_blank" rel="noopener">cliquez ici pour payer</a>.</p>
+        <button class="checkout-submit" onclick="closeCheckout()">Annuler</button>
       </div>
     </div>
   </div>
@@ -630,15 +670,23 @@
     document.getElementById('totalDisplay').textContent = (19.99 + fee).toFixed(2).replace('.',',') + ' €';
     document.getElementById('etaDisplay').textContent = 'Livraison estimée : ' + eta;
   }
-  function showGalleryImage(src, el){
-    document.getElementById('galleryMain').src = src;
+  const COLOR_LABELS = {silvery:'Silvery', graphite:'Graphite', mint:'Menthe', white:'Blanc'};
+  function showGalleryColor(color, el){
     document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+    const main = document.getElementById('galleryMain');
+    main.innerHTML =
+      '<div class="gallery-placeholder-lg ph-' + color + '"></div>' +
+      '<p style="margin-top:16px;">Coloris <strong>' + COLOR_LABELS[color] + '</strong><br>Photo produit à ajouter ici.</p>';
   }
   updateShipping();
 
   /* ---------- tunnel de commande ---------- */
-  const SHOP_EMAIL = 'cosimomarino595@icloud.com';
+  // ⚠️ À COMPLÉTER : remplacez ce lien par votre vrai Stripe Payment Link
+  // (Dashboard Stripe → Payment Links → créez un lien pour "Lot Cool Duo — 19,99€").
+  // Le paiement (CB) est alors géré entièrement par Stripe : aucune donnée bancaire
+  // ne transite par ce site, et vous et vos clients êtes protégés.
+  const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/VOTRE_LIEN_A_REMPLACER';
 
   function buildCheckoutCountrySelect(){
     const src = document.getElementById('country');
@@ -670,40 +718,35 @@
 
   function submitOrder(e){
     e.preventDefault();
-    const name = document.getElementById('ckName').value;
     const email = document.getElementById('ckEmail').value;
-    const phone = document.getElementById('ckPhone').value;
-    const address = document.getElementById('ckAddress').value;
-    const zip = document.getElementById('ckZip').value;
-    const city = document.getElementById('ckCity').value;
-    const sel = document.getElementById('ckCountry');
-    const country = sel.options[sel.selectedIndex].textContent.split(' — ')[0];
     const color1 = document.getElementById('sumColor1').textContent;
     const color2 = document.getElementById('sumColor2').textContent;
-    const total = document.getElementById('sumTotal').textContent;
 
     const ref = 'CB-' + Date.now().toString().slice(-8);
     document.getElementById('orderRef').textContent = ref;
-    document.getElementById('paidTotal').textContent = total;
 
-    const body =
-      'Nouvelle commande CoolBreeze\n\n' +
-      'Référence : ' + ref + '\n' +
-      'Total : ' + total + '\n\n' +
-      'Client : ' + name + '\n' +
-      'Email : ' + email + '\n' +
-      'Téléphone : ' + phone + '\n' +
-      'Adresse : ' + address + ', ' + zip + ' ' + city + ', ' + country + '\n\n' +
-      'Ventilateur 1 : ' + color1 + '\n' +
-      'Ventilateur 2 : ' + color2;
-
-    const mailto = 'mailto:' + SHOP_EMAIL +
-      '?subject=' + encodeURIComponent('Commande CoolBreeze — ' + ref) +
-      '&body=' + encodeURIComponent(body);
-    window.location.href = mailto;
+    // On garde une trace locale de la commande (couleurs + adresse) pour pouvoir
+    // la retrouver après le paiement Stripe grâce à la référence (client_reference_id).
+    try{
+      sessionStorage.setItem('coolbreeze_order_' + ref, JSON.stringify({
+        name: document.getElementById('ckName').value,
+        email, phone: document.getElementById('ckPhone').value,
+        address: document.getElementById('ckAddress').value,
+        zip: document.getElementById('ckZip').value,
+        city: document.getElementById('ckCity').value,
+        color1, color2
+      }));
+    }catch(err){ /* stockage indisponible, on continue quand même */ }
 
     document.getElementById('checkoutFormView').style.display = 'none';
     document.getElementById('paymentView').classList.add('open');
+
+    const stripeUrl = STRIPE_PAYMENT_LINK +
+      '?client_reference_id=' + encodeURIComponent(ref) +
+      '&prefilled_email=' + encodeURIComponent(email);
+    document.getElementById('stripeManualLink').href = stripeUrl;
+
+    setTimeout(() => { window.location.href = stripeUrl; }, 900);
   }
 </script>
 
